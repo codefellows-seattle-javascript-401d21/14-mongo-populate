@@ -1,0 +1,26 @@
+[
+    {
+        "name": "jax",
+        "type": "fighter",
+        "main_lane": "top",
+        "winrate_percent": 50
+    },
+    {
+        "name": "lux",
+        "type": "mage",
+        "main_lane": "mid",
+        "winrate_percent": 53
+    },
+    {
+        "name": "lulu",
+        "type": "support",
+        "main_lane": "bot",
+        "winrate_percent": 60
+    },
+    {
+        "name": "zoe",
+        "type": "mage",
+        "main_lane": "mid",
+        "winrate_percent": 58
+    }
+]
