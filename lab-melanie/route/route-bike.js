@@ -10,6 +10,7 @@ module.exports = function(router) {
       
       if(req.params._id) {
         return Bike.findById(req.params._id)
+          .populate('rider')
           .then(bike => res.status(200).json(bike))
           .catch(err => errorHandler(err, res));
       }
