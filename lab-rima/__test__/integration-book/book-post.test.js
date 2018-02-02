@@ -34,7 +34,6 @@ describe('POST /api/v1/book', () => {
             .send(this.mockBook)
             .then(res => this.res = res);
         })
-
     });
 
     test(
