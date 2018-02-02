@@ -12,11 +12,6 @@ Tolkien.pre('save', function(next) {
   Species.findById(this.species)
     .then(species => {
       species.tolkien = [...new Set(species.tolkien).add(this._id)];
-
-      // let trackIds = new Set(album.tracks)
-      // trackIds.add(this._id)
-      // album.tracks = [...trackIds]
-
       species.save();
     })
     .then(next)
@@ -24,7 +19,7 @@ Tolkien.pre('save', function(next) {
 });
 
 Tolkien.post('remove', function(doc, next) {
-  Species.findById(doc.tolkienType)
+  Species.findById(doc.species)
     .then(species => {
       species.tolkien = species.tolkien.filter(a => a.toString() !== doc._id.toString());
       species.save();
