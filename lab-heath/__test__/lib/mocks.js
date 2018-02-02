@@ -38,6 +38,7 @@ mock.cat.createOne = () => {
 
 mock.cat.createMany = n => {
   let result = {};
+
   return mock.owner.createOne()
     .then(owner => {
       result.owner = owner;

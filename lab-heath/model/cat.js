@@ -14,23 +14,25 @@ const Cat = mongoose.Schema({
 Cat.pre('save', function(next) {
   Owner.findById(this.owner)
     .then(owner => {
-      owner.cats = [...new Set(owner.cats).add(this._id)];
-      Owner.findByIdAndUpdate(this.catOwner, { stars: owner.cats });
+      let catIds = new Set(owner.cats);
+      catIds.add(this._id);
+      owner.cats = [...catIds];
+      Owner.findByIdAndUpdate(this.owner, {owner: owner.cats});
     })
     .then(next)
     .catch(() => next(new Error('Validation Error. Failed to save Cat.')));
 });
 
 Cat.post('remove', function(doc, next) {
-  Owner.findById(doc.ownerCat)
-    .then(cat => {
-      cat.owners = cat.owners.filter(a => a.toString() !== doc._id.toString());
-      Owner.findByIdAndUpdate(this.catOwner, { stars: owner.cats });
+  Owner.findById(doc.rider)
+    .then(owner => {
+      owner.cats = owner.cats.filter(a => a.toString() !== doc._id.toString());
+      Owner.findByIdAndUpdate(this.owner, {owner: owner.cats});
     })
     .then(next)
     .catch(next);
 });
 
 
-module.exports = mongoose.model('cat', Cat);
+module.exports = mongoose.model('cats', Cat);
 

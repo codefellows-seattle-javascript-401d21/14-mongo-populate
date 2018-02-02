@@ -1,8 +1,8 @@
 'use strict';
 
-const server = require('../../lib/server');
+const server = require('../../../lib/server');
 const superagent = require('superagent');
-const mocks = require('../lib/mocks');
+const mocks = require('../../lib/mocks');
 const faker = require('faker');
 require('jest');
 
