@@ -7,6 +7,7 @@ const errorHandler = require('../lib/error-handler');
 module.exports = function(router) {
   router.route('/species/:_id?')
     .get((req, res) => {
+      console.log('inside get species')
       if(req.params._id) {
         return Species.findById(req.params._id)
           .then(species => res.status(200).json(species))
