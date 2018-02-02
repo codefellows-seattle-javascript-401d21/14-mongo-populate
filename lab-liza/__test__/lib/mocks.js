@@ -27,8 +27,7 @@ mock.lotr.createOne = () => {
     .then(species => {
       result.species = species;
       return new Lotr({
-        artist: `${faker.name.firstName()} ${faker.name.lastName()}`,
-        title: faker.hacker.ingverb(),
+        name: `${faker.name.firstName()} ${faker.name.lastName()}`,
         species: species._id.toString(),
       }).save();
     })
@@ -43,13 +42,12 @@ mock.lotr.createMany = n => {
     .then(species => {
       result.species = species;
       let lotrProms = new Array(n).fill(0).map(() => new Lotr({
-        artist: `${faker.name.firstName()} ${faker.name.lastName()}`,
-        title: faker.hacker.ingverb(),
+        name: `${faker.name.firstName()} ${faker.name.lastName()}`,
         species: species._id.toString(),
       }).save());
       return Promise.all(lotrProms);
     })
-    .then(lotrs => result.lotrs = lotrs)
+    .then(lotr => result.lotr = lotr)
     .then(() => result);
 };
 

@@ -14,9 +14,10 @@ const MONGODB_URI = process.env.MONGODB_URI;
 const mongoConnection = mongoose.connect(MONGODB_URI);
 
 // Middleware
+require('../route/route-lotr')(router);
+require('../route/route-species')(router);
 app.use(cors());
 app.use('/api/v1', router);
-require('../route/route-lotr')(router);
 app.use('/{0,}', (req, res) => errorHandler(new Error('Path error. Route not found.'), res));
 
 // Server Controls
