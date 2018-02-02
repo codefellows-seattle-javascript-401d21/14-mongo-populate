@@ -31,7 +31,8 @@ module.exports = function(router) {
 
     })
     .delete((req, res) => {
-      return Bike.findByIdAndRemove(req.params._id)
+      return Bike.findById(req.params._id)
+        .then(bike => bike.remove())
         .then(() => res.sendStatus(204))
         .catch(err => errorHandler(err, res));
 

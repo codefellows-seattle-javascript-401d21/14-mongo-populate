@@ -1,56 +1,56 @@
-'use strict'
+'use strict';
 
-const faker = require('faker')
-const Album = require('../../model/album')
-const Track = require('../../model/track')
+const faker = require('faker');
+const Rider = require('../../model/rider.js');
+const Bike = require('../../model/bike.js');
 
-const mock = module.exports = {}
+const mock = module.exports = {};
 
-// Album Mocks - One, Many, RemoveAll
-mock.album = {}
+// Rider Mocks - One, Many, RemoveAll
+mock.rider = {};
 
-mock.album.createOne = () => new Album({ name: faker.hacker.adjective() }).save()
+mock.rider.createOne = () => new Rider({ name: faker.name.firstName() }).save();
 
-mock.album.createMany = n =>
-  Promise.all(new Array(n).fill(0).map(mock.album.createOne))
+mock.rider.createMany = n =>
+  Promise.all(new Array(n).fill(0).map(mock.rider.createOne));
 
-mock.album.removeAll = () => Promise.all([Album.remove()])
+mock.rider.removeAll = () => Promise.all([Rider.remove()]);
 
 
-// Track Mocks - One, Many, RemoveAll
-mock.track = {}
+// Bike Mocks - One, Many, RemoveAll
+mock.bike = {};
 
-mock.track.createOne = () => {
-  let result = {}
+mock.bike.createOne = () => {
+  let result = {};
 
-  return mock.album.createOne()
-  .then(album => {
-    result.album = album
-    return new Track({
-      artist: `${faker.name.firstName()} ${faker.name.lastName()}`,
-      title: faker.hacker.ingverb(),
-      album: album._id.toString(),
-    }).save()
-  })
-  .then(track => result.track = track)
-  .then(() => result)
-}
+  return mock.rider.createOne()
+    .then(rider => {
+      result.rider = rider;
+      return new Bike({
+        make: `${faker.hacker.adjective()}`,
+        category: faker.hacker.ingverb(),
+        rider: rider._id.toString(),
+      }).save();
+    })
+    .then(bike => result.bike = bike)
+    .then(() => result);
+};
 
-mock.track.createMany = n => {
-  let result = {}
+mock.bike.createMany = n => {
+  let result = {};
 
-  return mock.album.createOne()
-  .then(album => {
-    result.album = album
-    let trackProms = new Array(n).fill(0).map(() => new Track({
-      artist: `${faker.name.firstName()} ${faker.name.lastName()}`,
-      title: faker.hacker.ingverb(),
-      album: album._id.toString(),
-    }).save())
-    return Promise.all(trackProms)
-  })
-  .then(tracks => result.tracks = tracks)
-  .then(() => result)
-}
+  return mock.rider.createOne()
+    .then(rider => {
+      result.rider = rider;
+      let bikeProms = new Array(n).fill(0).map(() => new Bike({
+        make: `${faker.hacker.adjective()}`,
+        category: faker.hacker.ingverb(),
+        rider: rider._id.toString(),
+      }).save());
+      return Promise.all(bikeProms);
+    })
+    .then(bikes => result.bikes = bikes)
+    .then(() => result);
+};
 
-mock.track.removeAll = () => Promise.all([Track.remove()])
+mock.bike.removeAll = () => Promise.all([Bike.remove()]);
