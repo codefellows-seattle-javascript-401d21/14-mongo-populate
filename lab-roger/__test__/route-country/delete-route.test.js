@@ -1,7 +1,7 @@
 'use strict';
 
 // Testing Dependencies
-const server = require('../lib/server');
+const server = require('../../lib/server');
 const superagent = require('superagent');
 require('jest');
 

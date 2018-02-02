@@ -44,7 +44,7 @@ mock.city.createMany = n => {
       result.country = country;
       let cityProms = new Array(n).fill(0).map(() => new City({
         name: faker.address.country(),
-        continent: faker.address.continent(),
+        continent: faker.commerce.color(),
         country: country._id.toString(),
       }).save());
       return Promise.all(cityProms);

@@ -11,7 +11,7 @@ const City = module.exports = mongoose.Schema({
 
 
 City.pre('save', function(next) {
-  console.log('this.country', this)
+  
   country.findById(this.country)
     .then(country => {
       country.city = [...new Set(country.city).add(this._id)];
