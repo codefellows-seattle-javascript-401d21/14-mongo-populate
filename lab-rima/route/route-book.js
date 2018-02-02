@@ -29,7 +29,9 @@ module.exports = function(router) {
       debug(`Inside of get all.`);
       // get all data
       return Book.find()
-        .then(books => res.status(200).json(books))
+        .then(books => {
+          if(books === null) throw new Error('enoent');
+          if(books) res.status(200).json(books);})
         .catch(err => eH(err, res));
 
     })
