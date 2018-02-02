@@ -12,7 +12,7 @@ describe('Star Constructor Unit Tests', () => {
       expect(testStar).toBeInstanceOf(Star);
     });
     it('Should return an object with the correct properties', () => {
-      expect(testStar).toHaveProperty('starName');
+      expect(testStar).toHaveProperty('_id');
     });
     it('The object returned should have the correct information passed in as the values of the properties', () => {
       expect(testStar.starName).toBe('test star model');

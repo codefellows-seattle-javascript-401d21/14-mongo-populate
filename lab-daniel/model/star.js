@@ -22,7 +22,7 @@ Star.pre('save', function(next) {
   Type.findById(this.starType)
     .then(type => {
       type.stars = [...new Set(type.stars).add(this._id)];
-      Type.findByIdAndUpdate(this.starType, { stars: type.stars });
+      type.save();
     })
     .then(next)
     .catch(() => next(new Error('Validation Error: Failed to save new star record')));
@@ -32,7 +32,7 @@ Star.post('remove', function(doc, next) {
   Type.findById(doc.starType)
     .then(type => {
       type.stars = type.stars.filter(a => a.toString() !== doc._id.toString());
-      Type.findByIdAndUpdate(this.starType, { stars: type.stars });
+      type.save();
     })
     .then(next)
     .catch(next);
