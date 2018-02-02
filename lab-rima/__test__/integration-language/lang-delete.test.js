@@ -5,7 +5,6 @@ require('dotenv').config({path: path.resolve(process.cwd(), '__test__/.test.env'
 const server = require('../../lib/server');
 const superagent = require('superagent');
 const mock = require('../lib/mock');
-const faker = require('faker');
 
 
 describe('DELETE', () => {
@@ -22,32 +21,32 @@ describe('DELETE', () => {
       // create two languages to use them in test
       beforeAll(() => {
         return superagent.post(`:${process.env.PORT}/api/v1/language`)
-        .send({name: 'French'})
-        .then(res => this.resOne = res)
+          .send({name: 'French'})
+          .then(res => this.resOne = res);
       });
 
       beforeAll(() => {
         return superagent.post(`:${process.env.PORT}/api/v1/language`)
-        .send({name: 'Spanish'})
-        .then(res => this.resTwo = res)
+          .send({name: 'Spanish'})
+          .then(res => this.resTwo = res);
       });
 
       // delete a record
       beforeAll(() => {
         return superagent.del(`:${process.env.PORT}/api/v1/language/${this.resOne.body._id}`)
-          .then(res => this.delOne = res)
+          .then(res => this.delOne = res);
       });
 
       // try to get a record that has been deleted
       beforeAll(() => {
         return superagent.get(`:${process.env.PORT}/api/v1/language/${this.resOne.body._id}`)
-          .then(res => this.getOne = res)
+          .then(res => this.getOne = res);
       });
 
       // try to get a not deleted record
       beforeAll(() => {
         return superagent.get(`:${process.env.PORT}/api/v1/language/${this.resTwo.body._id}`)
-          .then(res => this.getTwo = res)
+          .then(res => this.getTwo = res);
       });
 
       test(

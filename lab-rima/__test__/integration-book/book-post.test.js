@@ -28,18 +28,18 @@ describe('POST /api/v1/book', () => {
             title: faker.hacker.ingverb(),
             author: faker.hacker.noun(),
             language: this.mockLang._id,
-          }
+          };
 
           return superagent.post(`:${process.env.PORT}/api/v1/book`)
             .send(this.mockBook)
             .then(res => this.res = res);
-        })
+        });
     });
 
     beforeAll(() => {
       return superagent.get(`:${process.env.PORT}/api/v1/language/${this.res.body.language.toString()}`)
-            .then(res => this.resLang = res);
-    })
+        .then(res => this.resLang = res);
+    });
 
     test(
       'should respond with http res status 201',

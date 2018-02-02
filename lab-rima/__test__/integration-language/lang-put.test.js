@@ -5,7 +5,6 @@ require('dotenv').config({path: path.resolve(process.cwd(), '__test__/.test.env'
 const server = require('../../lib/server');
 const superagent = require('superagent');
 const mock = require('../lib/mock');
-const faker = require('faker');
 
 
 describe('PUT /', () => {
@@ -22,7 +21,7 @@ describe('PUT /', () => {
     beforeAll(() => {
       return superagent.post(`:${process.env.PORT}/api/v1/language`)
         .send({name: 'English'})
-        .then(res => this.postOne = res)
+        .then(res => this.postOne = res);
     });
 
     // update an existing language to use it in test

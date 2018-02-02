@@ -5,7 +5,6 @@ require('dotenv').config({path: path.resolve(process.cwd(), '__test__/.test.env'
 const server = require('../../lib/server');
 const superagent = require('superagent');
 const mock = require('../lib/mock');
-const faker = require('faker');
 
 
 describe('POST /api/v1/language', () => {
@@ -27,8 +26,8 @@ describe('POST /api/v1/language', () => {
 
     beforeAll(() => {
       return superagent.get(`:${process.env.PORT}/api/v1/language/${this.resPost.body._id.toString()}`)
-            .then(res => this.resGet = res);
-    })
+        .then(res => this.resGet = res);
+    });
 
     test(
       'should respond with http res status 201',

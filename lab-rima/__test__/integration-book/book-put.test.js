@@ -28,12 +28,12 @@ describe('PUT /', () => {
             title: faker.hacker.ingverb(),
             author: faker.hacker.noun(),
             language: this.mockLang._id,
-          }
+          };
 
           return superagent.post(`:${process.env.PORT}/api/v1/book`)
             .send(this.mockBook)
-            .then(res => this.postOne = res)
-        })
+            .then(res => this.postOne = res);
+        });
     });
 
     // update an existing book to use it in test

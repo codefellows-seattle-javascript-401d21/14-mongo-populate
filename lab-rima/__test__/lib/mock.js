@@ -13,7 +13,7 @@ mock.lang = {};
 // create a specific language data
 mock.lang.createOne = (l) => {
   return new Lang({name: l}).save();
-}
+};
 
 // remove all data, not schema itself
 mock.lang.removeAll = () => Promise.all([Lang.remove()]);
@@ -32,17 +32,17 @@ mock.book.createOne = (l) => {
         title: `${faker.hacker.ingverb()}`,
         author: `${faker.name. firstName()} ${faker.name.lastName()}`,
         language: lang._id.toString(),
-        })
+      })
         .save();
     })
     .then(book => result.track = book)
-    .then(() => result)
-}
+    .then(() => result);
+};
 
 mock.book.createMany = n => {
   let result = {};
 
-  return mocl.lang.createOne(l)
+  return mock.lang.createOne(l)
     .then(lang => {
       result.lang = lang;
       let bookProms = new Array(n).fill(0).map(() => {new Book({
@@ -50,11 +50,11 @@ mock.book.createMany = n => {
         author: `${faker.name. firstName()} ${faker.name.lastName()}`,
         language: lang._id.toString(),
       })
-      .save()})
+        .save();});
       return Promise.all(bookProms);
     })
     .then(books => result.books = books)
-    .then(() => result)
-}
+    .then(() => result);
+};
 
 mock.book.removeAll = () => Promise.all([Book.remove()]);

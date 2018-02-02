@@ -29,12 +29,12 @@ describe('GET', function() {
               title: faker.hacker.ingverb(),
               author: faker.hacker.noun(),
               language: this.mockLangOne._id,
-            }
+            };
 
             return superagent.post(`:${process.env.PORT}/api/v1/book`)
               .send(this.mockBookOne)
               .then(res => this.resOne = res);
-          })
+          });
       });
 
       // get this.mockBookOne
@@ -103,12 +103,12 @@ describe('GET', function() {
               title: faker.hacker.ingverb(),
               author: faker.hacker.noun(),
               language: this.mockLangOne._id,
-            }
+            };
 
             return superagent.post(`:${process.env.PORT}/api/v1/book`)
               .send(this.mockBookOne)
               .then(res => this.resOne = res);
-          })
+          });
       });
 
       beforeAll(() => {
@@ -119,12 +119,12 @@ describe('GET', function() {
               title: faker.hacker.ingverb(),
               author: faker.hacker.noun(),
               language: this.mockLangTwo._id,
-            }
+            };
 
             return superagent.post(`:${process.env.PORT}/api/v1/book`)
               .send(this.mockBookTwo)
               .then(res => this.resTwo = res);
-          })
+          });
       });
 
       // get all books

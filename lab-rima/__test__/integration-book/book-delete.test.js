@@ -29,12 +29,12 @@ describe('DELETE', () => {
               title: faker.hacker.ingverb(),
               author: faker.hacker.noun(),
               language: this.mockLangOne._id,
-            }
+            };
 
             return superagent.post(`:${process.env.PORT}/api/v1/book`)
-            .send(this.mockBookOne)
-            .then(res => this.resOne = res)
-          })
+              .send(this.mockBookOne)
+              .then(res => this.resOne = res);
+          });
       });
 
       beforeAll(() => {
@@ -45,30 +45,30 @@ describe('DELETE', () => {
               title: faker.hacker.ingverb(),
               author: faker.hacker.noun(),
               language: this.mockLangTwo._id,
-            }
+            };
 
             return superagent.post(`:${process.env.PORT}/api/v1/book`)
-            .send(this.mockBookTwo)
-            .then(res => this.resTwo = res)
-          })
+              .send(this.mockBookTwo)
+              .then(res => this.resTwo = res);
+          });
       });
 
       // delete a record
       beforeAll(() => {
         return superagent.del(`:${process.env.PORT}/api/v1/book/${this.resOne.body._id}`)
-          .then(res => this.delOne = res)
+          .then(res => this.delOne = res);
       });
 
       // try to get a record that has been deleted
       beforeAll(() => {
         return superagent.get(`:${process.env.PORT}/api/v1/book/${this.resOne.body._id}`)
-          .then(res => this.getOne = res)
+          .then(res => this.getOne = res);
       });
 
       // try to get a record that should exist
       beforeAll(() => {
         return superagent.get(`:${process.env.PORT}/api/v1/book/${this.resTwo.body._id}`)
-          .then(res => this.getTwo = res)
+          .then(res => this.getTwo = res);
       });
 
       test(
