@@ -4,31 +4,26 @@
 const server = require('../../lib/server');
 const superagent = require('superagent');
 const mocks = require('../lib/mocks');
-const faker = require('faker');
 require('jest');
 
 // Test Variables
 let port = process.env.PORT;
-let api = `:${port}/api/v1/star`;
+let api = `:${port}/api/v1/startype`;
 
 describe('Route Testing', () => {
   beforeAll(() => server.start(port, () => console.log(`listening on ${port}`)));
   afterAll(() => server.stop());
-  afterAll(mocks.star.removeAll);
+  afterAll(mocks.type.removeAll);
   afterAll(mocks.type.removeAll);
 
-  describe('GET /api/v1/star', () => {
+  describe('GET /api/v1/type', () => {
     beforeAll(() => {
       return mocks.type.createOne()
         .then(type => this.mockType = type)
         .then(() => {
-          this.mockStar = {
-            starName: faker.hacker.ingverb(),
-            starType: this.mockType._id,
-          };
 
           return superagent.post(api)
-            .send(this.mockStar)
+            .send(this.mockType)
             .then(res => this.response = res);
         });
     });
@@ -40,11 +35,11 @@ describe('Route Testing', () => {
       it('Should respond with a status 200', () => {
         expect(this.response.status).toBe(200);
       });
-      it('Should respond with all stars', () => {
+      it('Should respond with all types', () => {
         expect(this.response.body).toBeTruthy();
       });
-      it('Should respond with a single star', () => {
-        expect(this.response.body.starName).toBe(this.mockStar.starName);
+      it('Should respond with a single type', () => {
+        expect(this.response.body.starName).toBe(this.mockType.starName);
       });
     });
 

@@ -2,10 +2,10 @@
 
 const Type = require('../model/type');
 const bodyParser = require('body-parser').json();
-const errorHandler = require('../lib/errorHandler');
+const errorHandler = require('../lib/error-handler');
 
 module.exports = function(router) {
-  router.route('/star_type/:_id?')
+  router.route('/startype/:_id?')
     .get((req, res) => {
       if (req.params._id) {
         return Type.findById(req.params._id)

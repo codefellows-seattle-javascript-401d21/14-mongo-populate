@@ -14,7 +14,7 @@ module.exports = function(router) {
       }
 
       Star.find()
-        .then(records => records.map(v => ({_id: v._id, starName : v.starName})))
+        .then(records => records.map(v => v._id))
         .then(stars => res.status(200).json(stars))
         .catch(err => errorHandler(err, res));
     })
@@ -34,7 +34,8 @@ module.exports = function(router) {
 
     .delete((req, res) => {
       if (!req.params._id) errorHandler(new Error('Validation Error: ID is required to find the record you wish to delete'), res);
-      Star.findByIdAndRemove(req.params._id)
+      Star.findById(req.params._id)
+        .then(star => star.remove())
         .then(() => res.sendStatus(204))
         .catch(err => errorHandler(err, res));
     });

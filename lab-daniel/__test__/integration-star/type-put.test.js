@@ -4,44 +4,39 @@
 const server = require('../../lib/server');
 const superagent = require('superagent');
 const mocks = require('../lib/mocks');
-const faker = require('faker');
 require('jest');
 
 // Test Variables
 let port = process.env.PORT;
-let api = `:${port}/api/v1/star`;
+let api = `:${port}/api/v1/startype`;
 
 describe('Route Testing', () => {
   beforeAll(() => server.start(port, () => console.log(`listening on ${port}`)));
   afterAll(() => server.stop());
-  afterAll(mocks.star.removeAll);
+  afterAll(mocks.type.removeAll);
   afterAll(mocks.type.removeAll);
 
-  describe('PUT /api/v1/star', () => {
+  describe('PUT /api/v1/type', () => {
     beforeAll(() => {
       return mocks.type.createOne()
         .then(type => this.mockType = type)
         .then(() => {
-          this.mockStar = {
-            starName: faker.hacker.ingverb(),
-            starType: this.mockType._id,
-          };
 
           return superagent.post(api)
-            .send(this.mockStar)
+            .send(this.mockType)
             .then(res => this.response = res);
         });
     });
     describe('Valid Routes/Data', () => {
       it('Should respond with a status 204', () => {
-        this.mockStar.starName = 'updated';
+        this.mockType.starName = 'updated';
         return superagent.put(`${api}/${this.response.body._id}`)
-          .send(this.mockStar)
+          .send(this.mockType)
           .then(res => {
             expect(res.status).toBe(204);
           });
       });
-      it('Should respond with a single star', () => {
+      it('Should respond with a single type', () => {
         return superagent.get(`${api}/${this.response.body._id}`)
           .then(res => {
             expect(res.body.starName).toBe('updated');
@@ -51,7 +46,7 @@ describe('Route Testing', () => {
     describe('Invalid Routes/Data', () => {
       it('Should respond a validation error response if a file id does not match the id sent', () => {
         return superagent.put(`${api}/${this.response.body._id.slice(0, -1)}9`)
-          .send(this.mockStar)
+          .send(this.mockType)
           .catch(err => {
             expect(err.response.text).toMatch(/Validation/);
           });
