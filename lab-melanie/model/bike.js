@@ -17,7 +17,7 @@ Bike.pre('save', function(next) {
       let bikeIds = new Set(rider.bikes);
       bikeIds.add(this._id);
       rider.bikes = [...bikeIds];
-      rider.save();
+      Rider.findByIdAndUpdate(this.rider, {rider: rider.bikes});
     })
     .then(next)
     .catch(() => next(new Error('Validation Error. Failed to save Bike.')));
@@ -27,7 +27,7 @@ Bike.post('remove', function(doc, next) {
   Rider.findById(doc.rider)
     .then(rider => {
       rider.bikes = rider.bikes.filter(a => a.toString() !== doc._id.toString());
-      rider.save();
+      Rider.findByIdAndUpdate(this.rider, {rider: rider.bikes});
     })
     .then(next)
     .catch(next);

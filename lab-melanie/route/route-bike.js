@@ -25,7 +25,7 @@ module.exports = function(router) {
         .catch(err => errorHandler(err, res));
     })
     .put(bodyParser, (req, res) => {
-      return Bike.findOneAndUpdate(req.params._id, req.body)
+      return Bike.findOneAndUpdate(req.params._id, req.body, {upsert: true, runValidators: true})
         .then(() => res.sendStatus(204))
         .catch(err => errorHandler(err, res));
 
