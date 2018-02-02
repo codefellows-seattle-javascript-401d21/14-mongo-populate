@@ -7,6 +7,7 @@ const debug = require('debug')('http:route-student');
 
 module.exports = (router) => {
   router.route('/student/:_id?')
+  // GET
     .get((req, res) => {
       debug(`#get: _id: ${req.params._id}`);
 
@@ -16,11 +17,12 @@ module.exports = (router) => {
           .catch(err => errorHandler(err, res));
       }
 
-      return Student.find({})
+      Student.find({})
         .then(studentObjs => studentObjs.map(e => e._id))
         .then(students => res.status(200).json(students))
         .catch(err => errorHandler(err, res));
     })
+  // POST
     .post(bodyParser, (req, res) => {
       debug(`#post: req.body.full_name: ${req.body.full_name}`);
 
@@ -28,17 +30,21 @@ module.exports = (router) => {
         .then(s => res.status(201).json(s))
         .catch(err => errorHandler(err, res));
     })
+  // PUT
     .put(bodyParser, (req, res) => {
       debug(`#put: req.params._id: ${req.params._id}`);
 
-      return Student.findByIdAndUpdate(req.params._id, req.body)
+      Student.findByIdAndUpdate(req.params._id, req.body)
         .then(() => res.sendStatus(204))
         .catch(err => errorHandler(err, res));
     })
+  // DELETE
     .delete((req, res) => {
       debug(`#delete: req.params._id: ${req.params._id}`);
 
-      return Student.findByIdAndRemove(req.params._id)
+      // Must find and explicitly call .remove() to trigger post delete
+      Student.findById(req.params._id)
+        .then(student => student.remove())
         .then(() => res.sendStatus(204))
         .catch(err => errorHandler(err, res));
     });
