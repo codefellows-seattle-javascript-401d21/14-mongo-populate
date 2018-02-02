@@ -21,6 +21,7 @@ mongoose.connect(MONGODB_URI);
 app.use(cors());
 app.use('/api/v1', router);
 require('../route/route-book')(router);
+require('../route/route-language')(router);
 app.use('/{0,}', (req, res) => {
 
   debug('here is path error in server.js');

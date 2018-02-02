@@ -36,6 +36,11 @@ describe('POST /api/v1/book', () => {
         })
     });
 
+    beforeAll(() => {
+      return superagent.get(`:${process.env.PORT}/api/v1/language/${this.res.body.language.toString()}`)
+            .then(res => this.resLang = res);
+    })
+
     test(
       'should respond with http res status 201',
       () => {
@@ -54,6 +59,13 @@ describe('POST /api/v1/book', () => {
       'should have an _id property on the response object',
       () => {
         expect(this.res.body).toHaveProperty('_id');
+      });
+
+    test(
+      'should create a language too',
+      () => {
+        expect(this.resLang.status).toBe(200);
+        expect(this.resLang.body.name).toEqual('English');
       });
   });
 

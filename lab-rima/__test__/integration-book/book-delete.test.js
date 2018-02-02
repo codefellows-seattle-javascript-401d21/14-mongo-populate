@@ -4,7 +4,8 @@ const path = require('path');
 require('dotenv').config({path: path.resolve(process.cwd(), '__test__/.test.env')});
 const server = require('../../lib/server');
 const superagent = require('superagent');
-//const route = require('../../route/route-book');
+const mock = require('../lib/mock');
+const faker = require('faker');
 
 
 describe('DELETE', () => {
@@ -14,9 +15,10 @@ describe('DELETE', () => {
 
   //delete specific one
   describe('DELETE /api/v1/book/:_id', () => {
+
     let postOne, postTwo, getTwo, deleteOne;
 
-    // create two books to use them in test
+    // create a book to use them in test
     beforeAll(() => {
       return superagent.post(`:${process.env.PORT}/api/v1/book`)
         .send({title: 'Test', author: 'Testing'})
