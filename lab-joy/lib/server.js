@@ -23,6 +23,8 @@ require('../route/route-author')(router);
 app.use('/{0,}', (req, res) => errorHandler(new Error('Path error. Route not found.'), res));
 
 // server controls
+let server = module.exports = {};
+
 server.start = () => {
     return new Promise((resolve, reject) => {
         if (server.isOn) return reject(new Error('Error: server already running.'));
@@ -48,5 +50,3 @@ server.stop = () => {
         });
     });
 };
-
-const server = module.exports = {};
