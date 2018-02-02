@@ -38,9 +38,9 @@ module.exports = function(router) {
         .catch(err => errorHandler(err, res));
     })
     .delete((req, res) => {
-      debug(`${req.method}: ${req.url}`);
-
-      Lotr.findByIdAndRemove(req.params._id)
+      if (!req.params._id) errorHandler(new Error('Validation Error: ID is required to find the record you wish to delete'), res);
+      Lotr.findById(req.params._id)
+        .then(star => star.remove())
         .then(() => res.sendStatus(204))
         .catch(err => errorHandler(err, res));
     });
