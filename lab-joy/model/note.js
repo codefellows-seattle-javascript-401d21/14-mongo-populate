@@ -21,17 +21,14 @@ Note.pre('save', function(next) {
         .catch(() => next(new Error('Validation Error. Failed to save note.')));
 });
 
-module.exports = mongoose.model('nots', Note);
+Note.post('remove', function(doc, next) {
+    Author.findById(doc.authorType)
+        .then(author => {
+            author.notes = author.notes.filter(e => e.toString() !== doc._id.toString());
+            author.save();
+        })
+        .then(next)
+        .catch(next);
+});
 
-// TODO: Need to Debug.
-// Track.post('remove', function(doc, next) {
-//   Album.findById(doc.album)
-//   .then(album => {
-//     console.log(album.tracks)
-//     album.tracks = album.tracks.filter(a => doc._id !== a)
-//     album.save()
-//     // might need to return the above line?? Not sure. Test it!
-//   })
-//   .then(next)
-//   .catch(next)
-// })
+module.exports = mongoose.model('nots', Note);
