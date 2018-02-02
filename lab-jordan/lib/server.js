@@ -4,29 +4,33 @@
 const cors = require('cors')
 const express = require('express')
 const mongoose = require('mongoose')
+const debug = require('debug')('http:server')
 const errorHandler = require('./error-handler')
 
 // Application Setup
-const app = express()
 const PORT = process.env.PORT
 const router = express.Router()
+const app = express()
 const MONGODB_URI = process.env.MONGODB_URI
-const mongoConnection = mongoose.connect(MONGODB_URI)
 
 // Middleware
+require('../route/route-tolkien')(router)
+require('../route/route-species')(router)
 app.use(cors())
 app.use('/api/v1', router)
-require('../route/route-tolkien')(router)
-app.use('/{0,}', (req, res) => errorHandler(new Error('Path error. Route not found.'), res))
+
+// 404 Error Handler
+app.all('/*', (req, res) => errorHandler(err, res))
 
 // Server Controls
-const server = module.exports = {}
+let server = module.exports = {}
 server.start = () => {
   return new Promise((resolve, reject) => {
-    if(server.isOn) return reject(new Error('Server running. Cannot start server again'))
+    if(server.isOn) return reject('shit hit the fan')
 
     server.http = app.listen(PORT, () => {
-      console.log(`Listening on ${PORT}`)
+      console.log('server up', PORT)
+      mongoose.connect(MONGODB_URI)
       server.isOn = true
       return resolve(server)
     })
@@ -35,13 +39,13 @@ server.start = () => {
 
 server.stop = () => {
   return new Promise((resolve, reject) => {
-    if(!server.isOn) return reject(new Error('Server not running. Cannot shut server down'))
+    if(!server.isOn) return reject()
 
     server.http.close(() => {
-      console.log('Shutting down server')
+      console.log('server down')
       mongoose.disconnect()
       server.isOn = false
-      return resolve(server)
+      return resolve()
     })
   })
 }

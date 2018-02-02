@@ -1,61 +1,52 @@
 'use strict';
 
-// Testing Dependencies
 const server = require('../../lib/server');
 const superagent = require('superagent');
+const mocks = require('../lib/mocks');
+const faker = require('faker');
 require('jest');
 
-// Test Variables
-let port = process.env.PORT;
-let idHolder, api = `:${port}/api/v1/tolkien`;
+describe('POST /api/v1/tolkien', function() {
+  beforeAll(() => this.base = `:${process.env.PORT}/api/v1/tolkien`);
+  beforeAll(server.start);
+  afterAll(server.stop);
+  afterEach(mocks.species.removeAll);
+  afterEach(mocks.tolkien.removeAll);
 
-describe('Server module', () => {
-  this.mockCharacter = { name: 'Gandalf', species: 'Maiar' };
-  beforeAll(() => server.start(port, () => console.log(`listening on ${port}`)));
-  afterAll(() => server.stop());
-
-  describe('GET /api/v1/tolkien', () => {
+  describe('Valid requests', () => {
     beforeAll(() => {
-      return superagent.post(api)
-        .send(this.mockCharacter);
-    });
-    describe('Valid Routes/Data', () => {
-      beforeAll(() => {
-        return superagent.get(api)
-          .then(res => this.response = res);
-      });
-      it('Should respond with a status 200', () => {
-        expect(this.response.status).toBe(200);
-      });
-      it('Should respond with all characters', () => {
-        idHolder = this.response.body[0];
-        expect(this.response.body).toBeTruthy();
-      });
-      // it('Should respond with a single note', () => {
-      //   return superagent.get(`${api}/${idHolder}`)
-      //     .then(res => expect(res.body.title).toBe('test'));
-      // });
+      return mocks.species.createOne()
+        .then(species => this.mockSpecies = species)
+        .then(() => {
+          this.fakeTolkien = {
+            name: faker.hacker.noun(),
+            species: this.mockSpecies._id,
+          };
+
+          return superagent.post(`${this.base}`)
+            .send(this.fakeTolkien)
+            .then(res => this.response = res);
+        });
     });
 
-    describe('Invalid Routes/Data', () => {
-      // it('Should respond a not found or path error when given an incorrect path', () => {
-      //   return superagent.get(`${api}/invalididparameter`)
-      //     .catch(err => {
-      //       expect(err.response.text).toMatch(/ENOENT/);
-      //     });
-      // });
-      it('Should respond a 404 bad path when given an incorrect path', () => {
-        return superagent.get(`${api}/invalididparameter`)
-          .catch(err => {
-            expect(err.status).toBe(404);
-          });
-      });
-      // it('Should throw a 500 status error if the server fails to read a corrupted file', () => {
-      //   return superagent.get(`${api}/Official500testfile`)
-      //     .catch(err => {
-      //       expect(err.status).toBe(500);
-      //     });
-      // });
+    it('should return a status of 201', () => {
+      expect(this.response.status).toEqual(201);
+    });
+    it('should return a new tolkien instance', () => {
+      expect(this.response.body).toHaveProperty('_id');
+    });
+  });
+
+  describe('inValid requests', () => {
+    it('should return a status 400 given no request body', () => {
+      return superagent.post(`${this.base}`)
+        .send()
+        .catch(err => expect(err.status).toEqual(400));
+    });
+    it('should return a status 400 given an improperly formatted body', () => {
+      return superagent.post(`${this.base}`)
+        .send({gnarf: 200})
+        .catch(err => expect(err.status).toEqual(400));
     });
   });
 });

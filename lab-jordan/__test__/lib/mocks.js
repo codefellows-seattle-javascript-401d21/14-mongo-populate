@@ -27,8 +27,7 @@ mock.tolkien.createOne = () => {
   .then(species => {
     result.species = species
     return new Tolkien({
-      artist: `${faker.name.firstName()} ${faker.name.lastName()}`,
-      title: faker.hacker.ingverb(),
+      name: `${faker.name.firstName()} ${faker.name.lastName()}`,
       species: species._id.toString(),
     }).save()
   })
@@ -43,8 +42,7 @@ mock.tolkien.createMany = n => {
   .then(species => {
     result.species = species
     let tolkienProms = new Array(n).fill(0).map(() => new Tolkien({
-      artist: `${faker.name.firstName()} ${faker.name.lastName()}`,
-      title: faker.hacker.ingverb(),
+      name: `${faker.name.firstName()} ${faker.name.lastName()}`,
       species: species._id.toString(),
     }).save())
     return Promise.all(tolkienProms)

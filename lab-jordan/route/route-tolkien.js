@@ -12,15 +12,15 @@ module.exports = function(router) {
 
     if (req.params._id) {
       return Tolkien.findById(req.params._id)
-      // .populate('species')
-      .then(tolkien => res.status(200).json(tolkien))
-      .catch(err => errorHandler(err, res))
+        .populate('species')
+        .then(tolkien => res.status(200).json(tolkien))
+        .catch(err => errorHandler(err, res))
     }
 
     Tolkien.find()
-    .then(tracks => tracks.map(t => t._id))
-    .then(ids => res.status(200).json(ids))
-    .catch(err => errorHandler(err, res))
+      .then(tracks => tracks.map(t => t._id))
+      .then(ids => res.status(200).json(ids))
+      .catch(err => errorHandler(err, res))
   })
   .post(bodyParser, (req, res) => {
     debug(`${req.method}: ${req.url}`)

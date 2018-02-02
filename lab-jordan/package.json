@@ -16,6 +16,7 @@
   "devDependencies": {
     "debug": "^3.1.0",
     "eslint": "^4.16.0",
+    "faker": "^4.1.0",
     "jest": "^22.1.4",
     "superagent": "^3.8.2"
   },
