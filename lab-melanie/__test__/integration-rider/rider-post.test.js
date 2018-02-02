@@ -3,7 +3,7 @@
 const server = require('../../lib/server.js');
 const superagent = require('superagent');
 const mock = require('../lib/mock.js');
-// const faker = require('faker');
+const faker = require('faker');
 
 require('jest');
 
@@ -13,24 +13,21 @@ describe('POST', function() {
   afterAll(mock.rider.removeAll);
   afterAll(mock.bike.removeAll);
 
-  beforeAll(() => {
-    return mock.rider.createOne()
-      .then(rider => this.rider = rider);
-  }); 
-  // describe('Valid req/res', () => {
-  //   beforeAll(() => {
-  //     return superagent.post(':4000/api/v1/rider')
-  //       .send(this.rider)
-  //       .then(res => this.response = res);
-  //   });
-  //   it('should post a new bike with make, and _id', () => {
-  //     expect(this.response.body).toHaveProperty('name');
-  //     expect(this.response.body).toHaveProperty('_id');
-  //   });
-  //   it('should respond with a status of 201', () => {
-  //     expect(this.response.status).toBe(201);
-  //   });
-  // });
+  describe('Valid req/res', () => {
+    beforeAll(() => {
+      this.rider = {name: faker.name.firstName()};
+      return superagent.post(':4000/api/v1/rider')
+        .send(this.rider)
+        .then(res => this.res = res);
+    });
+    it('should post a new rider object with a name and bike property', () => {
+      expect(this.res.body.name).toBe(this.rider.name);
+      expect(this.res.body).toHaveProperty('bikes');
+    });
+    it('should respond with a status of 201', () => {
+      expect(this.res.status).toBe(201);
+    });
+  });
 
   describe('Invalid req/res', () => {
     it('should return a status 404 on bad path', () => {
