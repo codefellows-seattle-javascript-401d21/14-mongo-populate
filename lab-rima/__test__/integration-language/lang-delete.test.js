@@ -87,7 +87,7 @@ describe('DELETE', () => {
   });
 
   //delete all
-  describe('DELETE /api/v1/language', () => {
+/*  describe('DELETE /api/v1/language', () => {
 
     describe('Valid input', () => {
 
@@ -128,5 +128,5 @@ describe('DELETE', () => {
           expect(this.getAll.body).toBeNull();
         });
     });
-  });
+  });*/
 });

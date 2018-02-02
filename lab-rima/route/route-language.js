@@ -69,7 +69,7 @@ module.exports = function(router) {
       debug('delete all');
 
       // delete all data
-      return Language.remove({})
+      return Language.remove()
         .then(() => res.status(200).end())
         .catch(err => eH(err, res));
 

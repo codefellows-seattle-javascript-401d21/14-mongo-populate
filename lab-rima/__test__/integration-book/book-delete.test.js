@@ -108,7 +108,7 @@ describe('DELETE', () => {
   });
 
   //delete all
-  describe('DELETE /api/v1/book', () => {
+/*  describe('DELETE /api/v1/book', () => {
 
     describe('Valid input', () => {
 
@@ -148,7 +148,7 @@ describe('DELETE', () => {
       // delete all data
       beforeAll(() => {
         return superagent.del(`:${process.env.port}/api/v1/book`)
-          .then(res => console.log(res))// this.delAll = res);
+          .then(res => this.delAll = res);
       });
 
       // try to get all data
@@ -169,5 +169,5 @@ describe('DELETE', () => {
           expect(this.getAll.body).toBeNull();
         });
     });
-  });
+  });*/
 });
