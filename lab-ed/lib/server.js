@@ -16,7 +16,8 @@ const MONGODB_URI = process.env.MONGODB_URI
 // Middleware
 app.use(cors())
 app.use('/api/v1', router)
-require('../route/route-mc')(router)
+require('../route/route-make')(router)
+require('../route/route-model')(router)
 app.use('/{0,}', (req, res) => errorHandler(new Error('Path error. Route not found.'), res))
 
 // Server Controls
