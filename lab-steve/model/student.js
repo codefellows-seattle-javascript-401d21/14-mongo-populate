@@ -1,9 +1,11 @@
 'use strict';
 
+const Major = require('./major');
 const mongoose = require('mongoose');
+const debug = require('debug')('http:student');
 
 const Student = mongoose.Schema({
-  'full_name': {type: String, require: true},
+  'name': {type: String, require: true},
   'student_id': String,
   'age': Number,
   'campus': String,
@@ -12,6 +14,8 @@ const Student = mongoose.Schema({
 
 // Before saving the student, find the major and add the students id to it
 Student.pre('save', function (next) {
+  debug(`#Student.pre-save: Attempting to add "${this.name}" to "${this.major}"`);
+
   Major.findById(this.major)
     .then(major => {
       major.students = [...new Set(major.students).add(this._id)];
@@ -21,11 +25,12 @@ Student.pre('save', function (next) {
     .catch(() => next(new Error('Validation Error. Failed to save Student.')));
 });
 
-// Before removing the student, find the major and remove the students id from it
-Student.pre('remove', function (student, next) {
-  Major.findById(student.major)
+Student.post('remove', function(doc, next) {
+  debug(`#Student.pre-remove: Attempting to remove "${doc.name}" from "${doc.major}"`);
+
+  Major.findById(doc.major)
     .then(major => {
-      major.students = major.students.filter(s => s._id.toString() !== student._id.toString());
+      major.students = major.students.filter(idOb => idOb.toString() !== doc._id.toString());
       major.save();
     })
     .then(next)

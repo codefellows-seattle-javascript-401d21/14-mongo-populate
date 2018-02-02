@@ -24,7 +24,7 @@ module.exports = (router) => {
     })
   // POST
     .post(bodyParser, (req, res) => {
-      debug(`#post: req.body.full_name: ${req.body.full_name}`);
+      debug(`#post: req.body.name: ${req.body.name}`);
 
       new Student(req.body).save()
         .then(s => res.status(201).json(s))
@@ -34,7 +34,7 @@ module.exports = (router) => {
     .put(bodyParser, (req, res) => {
       debug(`#put: req.params._id: ${req.params._id}`);
 
-      Student.findByIdAndUpdate(req.params._id, req.body)
+      return Student.findByIdAndUpdate(req.params._id, req.body)
         .then(() => res.sendStatus(204))
         .catch(err => errorHandler(err, res));
     })

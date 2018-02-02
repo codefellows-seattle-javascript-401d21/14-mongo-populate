@@ -49,7 +49,7 @@ describe('Route-student module', function() {
     describe('POST /student/:_id', () => {
       it('should respond with 201 status', () => {
         return superagent.post(`${this.ep}/student/`)
-          .send({full_name: 'Steve', age: 30})
+          .send({name: 'Steve', age: 30})
           .then(res => expect(res.status).toBe(201));
       });
     });
@@ -69,11 +69,11 @@ describe('Route-student module', function() {
       it('should respond with a status 204 following a successful PUT request', () => {
         let id;
         return superagent.post(`${this.ep}/student`)
-          .send({full_name: 'George', age: 44})
+          .send({name: 'George', age: 44})
           .then(res => id = res.body._id)
           .then(() => {
             return superagent.put(`${this.ep}/student/${id}`)
-              .send({full_name: 'Graham', age: 17})
+              .send({name: 'Graham', age: 17})
               .then(res => expect(res.status).toBe(204));
           });
       });
@@ -94,7 +94,7 @@ describe('Route-student module', function() {
       it('should respond with a status 204 on a successful deletion', () => {
         let id;
         return superagent.post(`${this.ep}/student`)
-          .send({full_name: 'Joe', age: 4})
+          .send({name: 'Joe', age: 4})
           .then(res => id = res.body._id)
           .then(() => {
             return superagent.delete(`${this.ep}/student/${id}`)

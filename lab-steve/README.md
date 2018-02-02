@@ -20,13 +20,13 @@ The user needs to do the following to use this student based Express API with Mo
 ## HTTP Method Directions
 This RESTful HTTP server allows users to create simple descriptions of students and their major.
 -_POST_: Endpoint - `/api/v1/student`, Supported body fields:
-  -`full_name`: _required_ String
+  -`name`: _required_ String
   -`student_id`: _optional_ String
   -`age`: _optional_ Number
   -`campus`: _optional_ String
 -_GET_: Endpoint - `/api/v1/student/:_id`, No data fields allowed
 -_PUT_: Endpoint - `/api/v1/student/:_id`, All fields are optional for a PUT request:
-  -`full_name`: String
+  -`name`: String
   -`student_id`: String
   -`age`: Number
   -`campus`: String

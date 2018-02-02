@@ -23,7 +23,7 @@ module.exports = function(router) {
     })
   // POST
     .post(bodyParser, (req, res) => {
-      debug(`#post: req.body.full_name: ${req.body.full_name}`);
+      debug(`#post: req.body.name: ${req.body.name}`);
       new Major(req.body).save()
         .then(major => res.status(201).json(major))
         .catch(err => errorHandler(err, res));
