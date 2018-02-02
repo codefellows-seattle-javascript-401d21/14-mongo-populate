@@ -1,49 +1,52 @@
 'use strict';
 
-const debug = require('debug')('http:server-test');
+const debug = require('debug')('http:image-get-test');
 const server = require('../../lib/server');
 const superagent = require('superagent');
+const mocks = require('../lib/mock');
+const faker = require('faker');
 require('jest');
 
-describe('DELETE Integration', function() {
+describe('image POST /api/v1/track', function() {
+  this.url = `:${process.env.PORT}/api/v1/image`;
   beforeAll(() => server.start());
   afterAll(() => server.stop());
-  
+  afterEach(mocks.album.removeAll);
+  afterEach(mocks.image.removeAll);
+
+  debug('this.url', this.url);
+
+
   describe('Valid requests', () => {
-
-    this.newImage = {
-      file_path: '/Users/driftabout/Pictures/MISC_PIC/KMP_010115_4259.jpg',
-      photographer: 'Kevin Miller',
-      title: 'Robot',
-      description: 'Seriously, its not a chicken.' ,
-      location: 'Seattle, Wa',
-      album: '5a73c6b669a8cb69eaafbe10',
-    };
-
-    beforeAll(()=> {
-      return  superagent.post(':4000/api/v1/image')
-        .send(this.newImage)
-        .then( res => {
-          this.resPost = res;
-          return;
-        })
-        .catch(err => {
-          debug('superagent error ', err);
+    beforeAll(() => {
+      return mocks.album.createOne()
+        .then(album => this.album = album)
+        .then(() => {
+          this.image = {
+            file_path: faker.image.imageUrl(),
+            photographer: faker.name.findName(),
+            title: faker.hacker.adjective(),
+            description: faker.hacker.phrase(),
+            album: this.album._id,
+          };
+          return superagent.post(`${this.url}`)
+            .send(this.image)
+            .then(res => this.resPost = res);
         });
     });
 
     describe('DELETE /api/v1/image/someid ', () => {
       
       beforeAll(() => {
-        return superagent.delete(`:4000/api/v1/image/${this.resPost.body._id}`)
+        return superagent.delete(`${this.url}/${this.resPost.body._id}`)
           .then(res => this.deleteRes = res);       
       });
       beforeAll(() => {
-        return superagent.get(`:4000/api/v1/image/${this.resPost.body._id}`)
+        return superagent.get(`${this.url}/${this.resPost.body._id}`)
           .catch(err => this.getErr = err);       
       });
 
-      it('should return status 404', () => {
+      it('should return status 404 for a get because the file was deleted', () => {
         debug('this.deleteGeterr.status', this.getErr.status);
         expect(this.getErr.status).toEqual(404);
       });
@@ -53,25 +56,25 @@ describe('DELETE Integration', function() {
     });
   });
 
-  // describe('Invalid requests', () => {
+  describe('Invalid requests', () => {
 
-  //   beforeAll(() => {
-  //     return superagent.delete(`:4000/api/v1/${this.resPost.body._id}`)
-  //       .catch(err => this.deleteErr = err);       
-  //   });
-  //   beforeAll(() => {
-  //     return superagent.delete(':4000/api/v1/image/98457737d9934wy6a9w45q90c')
-  //       .catch(err => this.badDelete = err);       
-  //   });
+    beforeAll(() => {
+      return superagent.delete(`${this.url}/badPath/${this.resPost.body._id}`)
+        .catch(err => this.deleteErr = err);       
+    });
+    beforeAll(() => {
+      return superagent.delete(`${this.url}/98457737d9934wy6a9w45q90c`)
+        .catch(err => this.badDelete = err);       
+    });
 
-  //   it('should return status 404 when DELETE request to a bad path', () => {
-  //     expect(this.deleteErr.status).toEqual(404);
-  //   });
+    it('should return status 404 when DELETE request to a bad path', () => {
+      expect(this.deleteErr.status).toEqual(404);
+    });
 
-  //   it('should return status 404 when DELETE request with a bad id', () => {
-  //     expect(this.badDelete.status).toEqual(400);
-  //   });
+    it('should return status 404 when DELETE request with a bad id', () => {
+      expect(this.badDelete.status).toEqual(400);
+    });
 
-  // });
+  });
 
 });

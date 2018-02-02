@@ -13,12 +13,11 @@ const MONGODB_URI = process.env.MONGODB_URI;
 const app = express();
 const router = express.Router();
 
-const route_image = require('./route.router-image')(router);
-const route_album = require('./route.router-album')(router);
+require('../route/route-image')(router);
+require('../route/route-album')(router);
 
 app.use(cors());
-app.use('/api/v1/image', router_image);
-app.use('/api/v1/album', router_album);
+app.use('/api/v1', router);
 app.use('/*',  (req, res) => errorHandler(new Error('Path error: Route does not exist'), res));
 
 const server = module.exports = {};
