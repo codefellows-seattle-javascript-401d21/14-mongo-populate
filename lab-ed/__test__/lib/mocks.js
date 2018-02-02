@@ -27,8 +27,8 @@ mock.model.createOne = () => {
     .then(make => {
       result.make = make
       return new Model({
-        artist: `${faker.name.firstName()} ${faker.name.lastName()}`,
-        title: faker.hacker.ingverb(),
+        title: `${faker.name.firstName()} ${faker.name.lastName()}`,
+        year: faker.hacker.ingverb(),
         make: make._id.toString(),
       }).save()
     })
@@ -43,8 +43,8 @@ mock.model.createMany = n => {
     .then(make => {
       result.make = make
       let modelProms = new Array(n).fill(0).map(() => new Model({
-        artist: `${faker.name.firstName()} ${faker.name.lastName()}`,
-        title: faker.hacker.ingverb(),
+        title: `${faker.name.firstName()} ${faker.name.lastName()}`,
+        year: faker.hacker.ingverb(),
         make: make._id.toString(),
       }).save())
       return Promise.all(modelProms)

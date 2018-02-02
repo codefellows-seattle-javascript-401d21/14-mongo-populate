@@ -39,7 +39,8 @@ module.exports = function(router) {
     .delete((req, res) => {
       debug(`${req.method}: ${req.url}`)
 
-      Model.findByIdAndRemove(req.params._id)
+      Model.findById(req.params._id)
+        .then(model => model.remove())
         .then(() => res.sendStatus(204))
         .catch(err => errorHandler(err, res))
     })

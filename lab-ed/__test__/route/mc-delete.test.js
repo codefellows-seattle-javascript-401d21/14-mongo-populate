@@ -7,7 +7,7 @@ const faker = require('faker')
 require('jest')
 
 describe('DELETE /api/v1/model', function () {
-  beforeAll(() => this.base = `:${process.env.PORT}/api/v1/model`)
+  beforeAll(() => this.base = `:${process.env.PORT}/api/v1/make`)
   beforeAll(server.start)
   afterAll(server.stop)
 
@@ -17,8 +17,8 @@ describe('DELETE /api/v1/model', function () {
         .then(make => this.mockMake = make)
         .then(() => {
           this.fakeModel = {
-            title: faker.hacker.ingverb(),
-            artist: faker.hacker.noun(),
+            name: faker.hacker.ingverb(),
+            year: faker.hacker.noun(),
             make: this.mockMake._id,
           }
 
@@ -29,7 +29,10 @@ describe('DELETE /api/v1/model', function () {
     })
 
     it('should return a status 204 on successful deletion', () => {
+      console.log(this.base)
+      console.log(this.mockMake._id)
       return superagent.delete(`${this.base}/${this.response.body._id}`)
+      //return superagent.delete(`${this.base}/${this.mockMake._id}`)
         .then(res => expect(res.status).toEqual(204))
     })
   })
