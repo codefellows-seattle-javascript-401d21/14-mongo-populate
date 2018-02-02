@@ -34,6 +34,9 @@ module.exports = (router) => {
     .put(bodyParser, (req, res) => {
       debug(`#put: req.params._id: ${req.params._id}`);
 
+      if (!req.params._id)
+        return errorHandler(new Error('Validation Error: Id required'), res);
+
       return Student.findByIdAndUpdate(req.params._id, req.body)
         .then(() => res.sendStatus(204))
         .catch(err => errorHandler(err, res));
@@ -42,8 +45,11 @@ module.exports = (router) => {
     .delete((req, res) => {
       debug(`#delete: req.params._id: ${req.params._id}`);
 
+      if (!req.params._id)
+        return errorHandler(new Error('Validation Error: Id required'), res);
+
       // Must find and explicitly call .remove() to trigger post delete
-      Student.findById(req.params._id)
+      return Student.findById(req.params._id)
         .then(student => student.remove())
         .then(() => res.sendStatus(204))
         .catch(err => errorHandler(err, res));

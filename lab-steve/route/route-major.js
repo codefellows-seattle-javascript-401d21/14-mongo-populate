@@ -32,10 +32,23 @@ module.exports = function(router) {
     .put(bodyParser, (req, res) => {
       debug(`#put: req.params._id: ${req.params._id}`);
 
+      if (!req.params._id)
+        return errorHandler(new Error('Validation Error: Id required'), res);
+
+      return Major.findByIdAndUpdate(req.params._id, req.body)
+        .then(() => res.sendStatus(204))
+        .catch(err => errorHandler(err, res));
     })
   // DELETE
     .delete((req, res) => {
       debug(`#delete: req.params._id: ${req.params._id}`);
 
+      if (!req.params._id)
+        return errorHandler(new Error('Validation Error: Id required'), res);
+
+      return Major.findByIdAndRemove(req.params._id)
+        .then(() => res.sendStatus(204))
+        .catch(err => errorHandler(err, res));
     });
 };
+
