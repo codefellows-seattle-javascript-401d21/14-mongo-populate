@@ -6,7 +6,7 @@ const mocks = require('../lib/mocks');
 const faker = require('faker');
 require('jest');
 
-describe('POST /api/v1/tolkien', function() {
+describe('GET /api/v1/tolkien', function() {
   beforeAll(() => this.base = `:${process.env.PORT}/api/v1/tolkien`);
   beforeAll(server.start);
   afterAll(server.stop);
