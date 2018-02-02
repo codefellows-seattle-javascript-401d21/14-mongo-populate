@@ -13,39 +13,28 @@ describe('PUT /', () => {
   beforeAll(() => server.start());
   afterAll(() => server.stop());
   afterEach(mock.lang.removeAll);
-  afterEach(mock.book.removeAll);
 
 
   describe('Valid input', () => {
 
-    // First new book
-    // post an existing book to use it in test
+    // First new language
+    // post an existing language to use it in test
     beforeAll(() => {
-      return mock.lang.createOne('French')
-        .then(lang => this.mockLang = lang)
-        .then(() => {
-          this.mockBook = {
-            title: faker.hacker.ingverb(),
-            author: faker.hacker.noun(),
-            language: this.mockLang._id,
-          }
-
-          return superagent.post(`:${process.env.PORT}/api/v1/book`)
-            .send(this.mockBook)
-            .then(res => this.postOne = res)
-        })
+      return superagent.post(`:${process.env.PORT}/api/v1/language`)
+        .send({name: 'English'})
+        .then(res => this.postOne = res)
     });
 
-    // update an existing book to use it in test
+    // update an existing language to use it in test
     beforeAll(() => {
-      return superagent.put(`:${process.env.PORT}/api/v1/book/${this.postOne.body._id}`)
-        .send({ title: 'Update' })
+      return superagent.put(`:${process.env.PORT}/api/v1/language/${this.postOne.body._id}`)
+        .send({ name: 'Not English' })
         .then(res => this.putOne = res);
     });
 
-    // get an existing book to use it in test
+    // get an existing language to use it in test
     beforeAll(() => {
-      return superagent.get(`:${process.env.PORT}/api/v1/book/${this.postOne.body._id}`)
+      return superagent.get(`:${process.env.PORT}/api/v1/language/${this.postOne.body._id}`)
         .then(res => this.getOne = res);
     });
 
@@ -56,10 +45,9 @@ describe('PUT /', () => {
       });
 
     test(
-      'should update only title when put request is sent with new title only',
+      'should update name when put request is sent with new data',
       () => {
-        expect(this.getOne.body.title).toEqual('Update');
-        expect(this.getOne.body.author).toEqual(this.mockBook.author);
+        expect(this.getOne.body.name).toEqual('Not English');
       });
   });
 
@@ -68,12 +56,11 @@ describe('PUT /', () => {
     test(
       'should return a status 404 if item not found',
       () => {
-        return superagent.put(`:${process.env.PORT}/api/v1/book/12345`)
+        return superagent.put(`:${process.env.PORT}/api/v1/language/12345`)
           .ok(res => res.status < 500)
           .catch(err => {
             expect(err.status).toEqual(404);
           });
       });
-
   });
 });
