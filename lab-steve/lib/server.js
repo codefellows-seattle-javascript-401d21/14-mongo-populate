@@ -17,6 +17,9 @@ const MONGODB_URI = process.env.MONGODB_URI;
 app.use(cors());
 app.use('/api/v1', router);
 require('../route/route-student')(router);
+require('../route/route-student')(router);
+
+// 404 Error Handler
 app.use('/{0,}', (req, res) => errorHandler(new Error('Path error. Route not found.'), res));
 
 // Server Controls
@@ -28,9 +31,9 @@ server.start = () => {
 
     server.http = app.listen(PORT, () => {
       console.log(`Listening on PORT ${PORT}`);
-      server.isOn = true;
       debug(`MONGODB_URI: ${MONGODB_URI}`);
-      server.db = mongoose.connect(MONGODB_URI);
+      mongoose.connect(MONGODB_URI);
+      server.isOn = true;
       return resolve(server);
     });
   });
