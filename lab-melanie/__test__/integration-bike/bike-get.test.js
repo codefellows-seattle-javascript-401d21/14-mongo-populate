@@ -25,10 +25,6 @@ describe('GET', function() {
       return superagent.get(`:4000/api/v1/bike/${this.bikeData.bikes[0]._id}`)
         .then(res => expect(res.status).toEqual(200));
     });
-    // it('should contain the two ids of records posted', () => {
-    //   expect(this.getOne.body).toContain(this.resOne.body._id);
-    //   expect(this.getOne.body).toContain(this.resTwo.body._id);
-    // });
   });
 
   describe('Invalid req/res', () => {

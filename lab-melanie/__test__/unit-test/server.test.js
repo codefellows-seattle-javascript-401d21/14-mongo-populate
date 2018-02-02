@@ -8,8 +8,11 @@ describe('Server Module', function() {
   afterAll(server.stop);
 
   it('should return a promise rejction if the server is already running when started', () => {
+    server.start();
     server.start()
-      .catch(err => expect(err.message).toMatch(/Server running/i));
+      .catch(err => expect(err).toBeInstanceOf(Error));
+    server.stop();
+  });
   });
   // it('should return a promise rejection if the server is stopped when stopped')
 });

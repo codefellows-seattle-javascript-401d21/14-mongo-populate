@@ -28,7 +28,7 @@ describe('DELETE', function() {
       expect(this.res.status).toBe(204);
     });
     it('should remove the bike from the database', () => {
-      return superagent.get(`:4000/api/toy/${this.bike._id}`)
+      return superagent.get(`:4000/api/rider/${this.bike._id}`)
         .catch(err => {
           expect(err.status).toBe(404);
         });

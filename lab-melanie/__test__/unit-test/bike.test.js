@@ -1,4 +1,3 @@
-
 'use strict';
 
 const Bike = require('../../model/bike.js');
