@@ -26,6 +26,9 @@
     "testEnvironment": "node",
     "collectCoverage": true,
     "coverageDirectory": "./coverage",
+    "coveragePathIgnorePatterns": [
+      "/__test__/"
+    ],
     "coverageThreshold": {
       "global": {
         "branches": 80,
@@ -55,6 +58,7 @@
     "debug": "^3.1.0",
     "dotenv": "^5.0.0",
     "eslint": "^4.16.0",
+    "faker": "^4.1.0",
     "jest": "^22.1.4",
     "superagent": "^3.8.2"
   }

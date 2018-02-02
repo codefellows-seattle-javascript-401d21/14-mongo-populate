@@ -2,51 +2,54 @@
 
 const server = require('../../lib/server');
 const superagent = require('superagent');
+const mocks = require('../lib/mocks');
+const faker = require('faker');
 require('jest');
 
 describe('POST /api/v1/champ', function() {
-  this.mockChamp = {name: 'vi', type: 'fighter', main_lane: 'jgl', winrate_percent: 48};
-
+  beforeAll(() => this.base = `:${process.env.PORT}/api/v1/champ`);
   beforeAll(server.start);
   afterAll(server.stop);
+  afterEach(mocks.season.removeAll);
+  afterEach(mocks.champ.removeAll);
 
-  describe('Valid req/res', () => {
+  describe('Valid requests', () => {
     beforeAll(() => {
-      return superagent.post(':4000/api/v1/champ')
-        .send(this.mockChamp)
-        .then(res => this.response = res);
+      return mocks.season.createOne()
+        .then(season => this.mockSeason = season)
+        .then(() => {
+          this.fakeChamp = {
+            name: faker.hacker.noun(),
+            type: faker.hacker.ingverb(),
+            main_lane: faker.hacker.ingverb(),
+            winrate_percent: (Math.random() * (70 - 40) + 40),
+            season: this.mockSeason._id,
+          };
+
+          return superagent.post(`${this.base}`)
+            .send(this.fakeChamp)
+            .then(res => this.response = res);
+        });
     });
 
-    it('should respond with a status of 201', () => {
-      expect(this.response.status).toBe(201);
+    it('should return a status of 201', () => {
+      expect(this.response.status).toEqual(201);
     });
-    it('should post a new champ with name, type, main_lane, and win_percent properties', () => {
-      expect(this.response.body).toHaveProperty('name');
-      expect(this.response.body).toHaveProperty('type');
-      expect(this.response.body).toHaveProperty('main_lane');
-      expect(this.response.body).toHaveProperty('winrate_percent');
-    });
-    it('should respond with properties matching the mockChamp', () => {
-      expect(this.response.body.name).toEqual(this.mockChamp.name);
-      expect(this.response.body.type).toEqual(this.mockChamp.type);
-      expect(this.response.body.main_lane).toEqual(this.mockChamp.main_lane);
-      expect(this.response.body.winrate_percent).toEqual(this.mockChamp.winrate_percent);
+    it('should return a new champ instance', () => {
+      expect(this.response.body).toHaveProperty('_id');
     });
   });
 
-  describe('Invalid req/res', () => {
-    it('should return a status 404 on bad path', () => {
-      return superagent.post(':4000/api/v1/doesNotExist')
-        .send(this.mockChamp)
-        .catch(err => {
-          expect(err.status).toBe(404);
-          expect(err.response.text).toMatch(/path error/i);
-        });
+  describe('inValid requests', () => {
+    it('should return a status 400 given no request body', () => {
+      return superagent.post(`${this.base}`)
+        .send()
+        .catch(err => expect(err.status).toEqual(400));
     });
-    it('should return a status 400 on bad request body', () => {
-      return superagent.post(':4000/api/v1/champ')
-        .send({})
-        .catch(err => expect(err.status).toBe(400));
+    it('should return a status 400 given an improperly formatted body', () => {
+      return superagent.post(`${this.base}`)
+        .send({gnarf: 200})
+        .catch(err => expect(err.status).toEqual(400));
     });
   });
 });
