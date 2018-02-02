@@ -13,33 +13,22 @@ describe('GET', function() {
   beforeAll(() => server.start());
   afterAll(() => server.stop());
   afterEach(mock.lang.removeAll);
-  afterEach(mock.book.removeAll);
 
 
-  describe('GET /api/v1/book/:id', function () {
+  describe('GET /api/v1/language/:id', function () {
 
     describe('Valid input', () => {
 
-      // create two books to use in test
+      // create two languages to use in test
       beforeAll(() => {
-        return mock.lang.createOne('English')
-          .then(lang => this.mockLangOne = lang)
-          .then(() => {
-            this.mockBookOne = {
-              title: faker.hacker.ingverb(),
-              author: faker.hacker.noun(),
-              language: this.mockLangOne._id,
-            }
-
-            return superagent.post(`:${process.env.PORT}/api/v1/book`)
-              .send(this.mockBookOne)
-              .then(res => this.resOne = res);
-          })
+        return superagent.post(`:${process.env.PORT}/api/v1/language`)
+          .send({name: 'English'})
+          .then(res => this.resOne = res);
       });
 
-      // get this.mockBookOne
+      // get it
       beforeAll(() => {
-        return superagent.get(`:${process.env.PORT}/api/v1/book/${this.resOne.body._id}`)
+        return superagent.get(`:${process.env.PORT}/api/v1/language/${this.resOne.body._id}`)
           .then(res => this.getOne = res);
       });
 
@@ -50,16 +39,15 @@ describe('GET', function() {
         });
 
       test(
-        'should contain title/author that has been created in test',
+        'should contain name that has been created in test',
         () => {
-          expect(this.getOne.body.title).toEqual(this.mockBookOne.title);
-          expect(this.getOne.body.author).toEqual(this.mockBookOne.author);
+          expect(this.getOne.body.name).toEqual('English');
         });
 
       test(
         'should contain language id that has been created in test',
         () => {
-          expect(this.getOne.body.language).toEqual(this.mockLangOne._id.toString());
+          expect(this.getOne.body._id.toString()).toEqual(this.resOne.body._id.toString());
         });
     });
 
@@ -79,7 +67,7 @@ describe('GET', function() {
       test(
         'should throw an error if item does not exist',
         () => {
-          superagent.get(`:${process.env.PORT}/api/v1/book/12345`)
+          superagent.get(`:${process.env.PORT}/api/v1/language/12345`)
             .ok(res => res.status < 500)
             .catch(err => {
               expect(err.status).toEqual(404);
@@ -90,46 +78,26 @@ describe('GET', function() {
   });
 
   // getAll
-  describe('GET /api/v1/book', () => {
+  describe('GET /api/v1/language', () => {
 
     describe('Valid input', function() {
 
-      // create two books to use in test
+      // create two languages to use in test
       beforeAll(() => {
-        return mock.lang.createOne('English')
-          .then(lang => this.mockLangOne = lang)
-          .then(() => {
-            this.mockBookOne = {
-              title: faker.hacker.ingverb(),
-              author: faker.hacker.noun(),
-              language: this.mockLangOne._id,
-            }
-
-            return superagent.post(`:${process.env.PORT}/api/v1/book`)
-              .send(this.mockBookOne)
-              .then(res => this.resOne = res);
-          })
+        return superagent.post(`:${process.env.PORT}/api/v1/language`)
+          .send('English')
+          .then(res => this.resOne = res);
       });
 
       beforeAll(() => {
-        return mock.lang.createOne('Japanese')
-          .then(lang => this.mockLangTwo = lang)
-          .then(() => {
-            this.mockBookTwo = {
-              title: faker.hacker.ingverb(),
-              author: faker.hacker.noun(),
-              language: this.mockLangTwo._id,
-            }
-
-            return superagent.post(`:${process.env.PORT}/api/v1/book`)
-              .send(this.mockBookTwo)
-              .then(res => this.resTwo = res);
-          })
+        return superagent.post(`:${process.env.PORT}/api/v1/language`)
+          .send('Japanese')
+          .then(res => this.resTwo = res);
       });
 
-      // get all books
+      // get all languages
       beforeAll(() => {
-        return superagent.get(`:${process.env.PORT}/api/v1/book`)
+        return superagent.get(`:${process.env.PORT}/api/v1/language`)
           .then(res => this.getAll = res);
       });
 
