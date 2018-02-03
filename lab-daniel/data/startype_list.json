@@ -1,0 +1,332 @@
+[
+  {
+    "name": "G2(V)"
+  },
+  {
+    "name": "M5(V)"
+  },
+  {
+    "name": "K4(V)"
+  },
+  {
+    "name": "M4(V)"
+  },
+  {
+    "name": "M6(V)"
+  },
+  {
+    "name": "M2(V)"
+  },
+  {
+    "name": "A1(V)"
+  },
+  {
+    "name": "DA(wd)"
+  },
+  {
+    "name": "M3(V)"
+  },
+  {
+    "name": "K2(V)"
+  },
+  {
+    "name": "Unknown"
+  },
+  {
+    "name": "F5(V)"
+  },
+  {
+    "name": "K5(V)"
+  },
+  {
+    "name": "M1(V)"
+  },
+  {
+    "name": "M8(V)"
+  },
+  {
+    "name": "G8(V)"
+  },
+  {
+    "name": "M0(V)"
+  },
+  {
+    "name": "M7(V)"
+  },
+  {
+    "name": "DZ(wd)"
+  },
+  {
+    "name": "DQ(wd)"
+  },
+  {
+    "name": "K7(V)"
+  },
+  {
+    "name": "K1(V)"
+  },
+  {
+    "name": "K0(V)"
+  },
+  {
+    "name": "A7(V)"
+  },
+  {
+    "name": "DC(wd)"
+  },
+  {
+    "name": "G3(V)"
+  },
+  {
+    "name": "K3(V)"
+  },
+  {
+    "name": "G5(V)"
+  },
+  {
+    "name": "DX(wd)"
+  },
+  {
+    "name": "M9(V)"
+  },
+  {
+    "name": "A3(V)"
+  },
+  {
+    "name": "A0(V)"
+  },
+  {
+    "name": "F6(V)"
+  },
+  {
+    "name": "F7(V)"
+  },
+  {
+    "name": "la(V)"
+  },
+  {
+    "name": "G0(V)"
+  },
+  {
+    "name": "G6(V)"
+  },
+  {
+    "name": "F9(V)"
+  },
+  {
+    "name": "F8(V)"
+  },
+  {
+    "name": "K8(V)"
+  },
+  {
+    "name": "K0(III)"
+  },
+  {
+    "name": "K2(III)"
+  },
+  {
+    "name": "K6(V)"
+  },
+  {
+    "name": "G9(V)"
+  },
+  {
+    "name": "A6(V)"
+  },
+  {
+    "name": "F0(V)"
+  },
+  {
+    "name": "G1(V)"
+  },
+  {
+    "name": "F2(V)"
+  },
+  {
+    "name": "G7(V)"
+  },
+  {
+    "name": "G5(III)"
+  },
+  {
+    "name": "G0(III)"
+  },
+  {
+    "name": "A5(III)"
+  },
+  {
+    "name": "K1(III)"
+  },
+  {
+    "name": "F1(III)"
+  },
+  {
+    "name": "K9(V)"
+  },
+  {
+    "name": "A2(V)"
+  },
+  {
+    "name": "A5(V)"
+  },
+  {
+    "name": "G4(V)"
+  },
+  {
+    "name": "F3(V)"
+  },
+  {
+    "name": "F2(III)"
+  },
+  {
+    "name": "F5(III)"
+  },
+  {
+    "name": "A4(V)"
+  },
+  {
+    "name": "K-(V)"
+  },
+  {
+    "name": "F1(V)"
+  },
+  {
+    "name": "F4(V)"
+  },
+  {
+    "name": "K2(II)"
+  },
+  {
+    "name": "K5(III)"
+  },
+  {
+    "name": "F4(III)"
+  },
+  {
+    "name": "F6(III)"
+  },
+  {
+    "name": "DB(wd)"
+  },
+  {
+    "name": "M5(III)"
+  },
+  {
+    "name": "F3(III)"
+  },
+  {
+    "name": "B7(V)"
+  },
+  {
+    "name": "A7(III)"
+  },
+  {
+    "name": "F8(III)"
+  },
+  {
+    "name": "A9(V)"
+  },
+  {
+    "name": "G8(III)"
+  },
+  {
+    "name": "A3(III)"
+  },
+  {
+    "name": "B8(V)"
+  },
+  {
+    "name": "Am(V)"
+  },
+  {
+    "name": "B5(V)"
+  },
+  {
+    "name": "G4(III)"
+  },
+  {
+    "name": "G9(III)"
+  },
+  {
+    "name": "F0(II)"
+  },
+  {
+    "name": "K3(III)"
+  },
+  {
+    "name": "F0(III)"
+  },
+  {
+    "name": "B3(V)"
+  },
+  {
+    "name": "G-(V)"
+  },
+  {
+    "name": "K (V)"
+  },
+  {
+    "name": "B9(V)"
+  },
+  {
+    "name": "G2(III)"
+  },
+  {
+    "name": "M0(III)"
+  },
+  {
+    "name": "G7(III)"
+  },
+  {
+    "name": "A0(III)"
+  },
+  {
+    "name": "B2(III)"
+  },
+  {
+    "name": "B1(V)"
+  },
+  {
+    "name": "A2(III)"
+  },
+  {
+    "name": "K3(II)"
+  },
+  {
+    "name": "G7(II)"
+  },
+  {
+    "name": "M2(II)"
+  },
+  {
+    "name": "B2(II)"
+  },
+  {
+    "name": "F7(II)"
+  },
+  {
+    "name": "F5(II)"
+  },
+  {
+    "name": "M1(II)"
+  },
+  {
+    "name": "B4(V)"
+  },
+  {
+    "name": "B8(I)"
+  },
+  {
+    "name": "A2(I)"
+  },
+  {
+    "name": "F0(I)"
+  },
+  {
+    "name": "M (V)"
+  },
+  {
+    "name": "B0(II)"
+  }
+]
