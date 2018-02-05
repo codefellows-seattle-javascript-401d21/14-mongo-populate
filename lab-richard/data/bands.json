@@ -1,0 +1,26 @@
+[
+    {
+        "name": "Alice in Chains",
+        "type": "Grunge",
+        "level": "10",
+        "album": "Black Gives Way to Blue"
+    },
+    {
+        "name": "Thrice",
+        "type": "Rock",
+        "level": "10",
+        "album": "To Be Everywhere is to Be Nowhere"
+    },
+    {
+        "name": "Chris Cornell",
+        "type": "Grunge",
+        "level": "11",
+        "album": "Any"
+    },
+    {
+        "name": "Avenged Sevenfold",
+        "type": "Metal",
+        "level": "10",
+        "album": "City of Evil"
+    }
+]
